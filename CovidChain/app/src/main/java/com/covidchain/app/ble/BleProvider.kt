@@ -33,8 +33,4 @@ class BleProvider(private val context: Context) {
             device.connectGatt(context, false, GattCallback(continuation))
         }
     }
-
-    private val mGattCallback: BluetoothGattCallback = object : BluetoothGattCallback() {
-
-    }
 }
