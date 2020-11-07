@@ -28,14 +28,13 @@ private val TAG = BluetoothLeService::class.java.simpleName
 private const val STATE_DISCONNECTED = 0
 private const val STATE_CONNECTING = 1
 private const val STATE_CONNECTED = 2
-const val ACTION_GATT_CONNECTED = "com.example.bluetooth.le.ACTION_GATT_CONNECTED"
-const val ACTION_GATT_DISCONNECTED = "com.example.bluetooth.le.ACTION_GATT_DISCONNECTED"
+const val ACTION_GATT_CONNECTED = "com.covidchain.app.le.ACTION_GATT_CONNECTED"
+const val ACTION_GATT_DISCONNECTED = "com.covidchain.app.le.ACTION_GATT_DISCONNECTED"
 const val ACTION_GATT_SERVICES_DISCOVERED =
-    "com.example.bluetooth.le.ACTION_GATT_SERVICES_DISCOVERED"
-const val ACTION_DATA_AVAILABLE = "com.example.bluetooth.le.ACTION_DATA_AVAILABLE"
-const val EXTRA_DATA = "com.example.bluetooth.le.EXTRA_DATA"
-val UUID_HEART_RATE_MEASUREMENT: UUID = UUID.fromString(SampleGattAttributes.HEART_RATE_MEASUREMENT)
-
+    "com.covidchain.app.le.ACTION_GATT_SERVICES_DISCOVERED"
+const val ACTION_DATA_AVAILABLE = "com.covidchain.app.le.ACTION_DATA_AVAILABLE"
+const val EXTRA_DATA = "com.covidchain.app.le.EXTRA_DATA"
+val UUID_COVID_CHAIN_KEY: UUID = UUID.fromString(SampleGattAttributes.UUID_COVID_CHAIN_KEY)
 
 
 /**
@@ -112,7 +111,7 @@ class BluetoothLeService : Service() {
         // This is special handling for the Heart Rate Measurement profile. Data
         // parsing is carried out as per profile specifications.
         when (characteristic.uuid) {
-            UUID_HEART_RATE_MEASUREMENT -> {
+            UUID_COVID_CHAIN_KEY -> {
                 val flag = characteristic.properties
                 val format = when (flag and 0x01) {
                     0x01 -> {
@@ -124,9 +123,9 @@ class BluetoothLeService : Service() {
                         BluetoothGattCharacteristic.FORMAT_UINT8
                     }
                 }
-                val heartRate = characteristic.getIntValue(format, 1)
-                Log.d(TAG, String.format("Received heart rate: %d", heartRate))
-                intent.putExtra(EXTRA_DATA, (heartRate).toString())
+                val bitcoin_key = characteristic.getIntValue(format, 1)
+                Log.d(TAG, String.format("Received heart rate: %d", bitcoin_key))
+                intent.putExtra(EXTRA_DATA, (bitcoin_key).toString())
             }
             else -> {
                 // For all other profiles, writes the data formatted in HEX.
@@ -243,7 +242,7 @@ class BluetoothLeService : Service() {
      * After using a given BLE device, the app must call this method to ensure resources are
      * released properly.
      */
-    fun close() {
+    private fun close() {
         if (mBluetoothGatt == null) {
             return
         }
@@ -283,7 +282,7 @@ class BluetoothLeService : Service() {
         mBluetoothGatt!!.setCharacteristicNotification(characteristic, enabled)
 
         // This is specific to Heart Rate Measurement.
-        if (UUID_HEART_RATE_MEASUREMENT == characteristic.uuid) {
+        if (UUID_COVID_CHAIN_KEY == characteristic.uuid) {
             val descriptor = characteristic.getDescriptor(
                 UUID.fromString(SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG)
             )
