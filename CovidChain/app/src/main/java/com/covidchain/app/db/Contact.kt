@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Contact (
-    @PrimaryKey val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Long,
     val key: String,
     val timestamp: Long
 )
