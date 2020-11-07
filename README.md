@@ -1,2 +1,5 @@
-#Dragonhack 2020 winning hack
+# Dragonhack 2020 winning hack
+
 Sergey
+
+João
