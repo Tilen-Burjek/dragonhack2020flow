@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.punchthrough.blestarterappandroid
+package com.covidchain.app.punch
 
 import android.bluetooth.le.ScanResult
 import android.view.View

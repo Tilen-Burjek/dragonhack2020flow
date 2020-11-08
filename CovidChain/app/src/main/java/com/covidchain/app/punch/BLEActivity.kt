@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.punchthrough.blestarterappandroid
+package com.covidchain.app.punch
 
 import android.Manifest
 import android.app.Activity
@@ -47,7 +47,7 @@ import timber.log.Timber
 private const val ENABLE_BLUETOOTH_REQUEST_CODE = 1
 private const val LOCATION_PERMISSION_REQUEST_CODE = 2
 
-class MainActivity : AppCompatActivity() {
+class BLEActivity : AppCompatActivity() {
 
     /*******************************************
      * Properties
@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
             }
             with(result.device) {
                 Timber.w("Connecting to $address")
-                ConnectionManager.connect(this, this@MainActivity)
+                ConnectionManager.connect(this, this@BLEActivity)
             }
         }
     }
@@ -189,7 +189,7 @@ class MainActivity : AppCompatActivity() {
         scan_results_recycler_view.apply {
             adapter = scanResultAdapter
             layoutManager = LinearLayoutManager(
-                this@MainActivity,
+                this@BLEActivity,
                 RecyclerView.VERTICAL,
                 false
             )
@@ -229,7 +229,7 @@ class MainActivity : AppCompatActivity() {
     private val connectionEventListener by lazy {
         ConnectionEventListener().apply {
             onConnectionSetupComplete = { gatt ->
-                Intent(this@MainActivity, BleOperationsActivity::class.java).also {
+                Intent(this@BLEActivity, BleOperationsActivity::class.java).also {
                     it.putExtra(BluetoothDevice.EXTRA_DEVICE, gatt.device)
                     startActivity(it)
                 }
