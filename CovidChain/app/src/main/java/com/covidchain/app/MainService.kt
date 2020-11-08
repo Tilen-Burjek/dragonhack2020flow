@@ -1,6 +1,8 @@
 package com.covidchain.app
 
 import android.app.Service
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.le.ScanResult
 import android.content.Intent
 import android.os.IBinder
 import com.covidchain.app.db.ContactRepository

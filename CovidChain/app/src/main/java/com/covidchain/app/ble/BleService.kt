@@ -161,28 +161,6 @@ class BluetoothLeService : Service() {
 
     private val mBinder: IBinder = LocalBinder()
 
-    /**
-     * Initializes a reference to the local Bluetooth adapter.
-     *
-     * @return Return true if the initialization is successful.
-     */
-    fun initialize(): Boolean {
-        // For API level 18 and above, get a reference to BluetoothAdapter through
-        // BluetoothManager.
-        if (mBluetoothManager == null) {
-            mBluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
-            if (mBluetoothManager == null) {
-                Log.e(TAG, "Unable to initialize BluetoothManager.")
-                return false
-            }
-        }
-        mBluetoothAdapter = mBluetoothManager!!.adapter
-        if (mBluetoothAdapter == null) {
-            Log.e(TAG, "Unable to obtain a BluetoothAdapter.")
-            return false
-        }
-        return true
-    }
 
     /**
      * Connects to the GATT server hosted on the Bluetooth LE device.
@@ -224,12 +202,6 @@ class BluetoothLeService : Service() {
         return true
     }
 
-    /**
-     * Disconnects an existing connection or cancel a pending connection. The disconnection result
-     * is reported asynchronously through the
-     * `BluetoothGattCallback#onConnectionStateChange(android.bluetooth.BluetoothGatt, int, int)`
-     * callback.
-     */
     fun disconnect() {
         if (mBluetoothAdapter == null || mBluetoothGatt == null) {
             Log.w(TAG, "BluetoothAdapter not initialized")
@@ -281,7 +253,6 @@ class BluetoothLeService : Service() {
         }
         mBluetoothGatt!!.setCharacteristicNotification(characteristic, enabled)
 
-        // This is specific to Heart Rate Measurement.
         if (UUID_COVID_CHAIN_KEY == characteristic.uuid) {
             val descriptor = characteristic.getDescriptor(
                 UUID.fromString(SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG)
@@ -291,13 +262,7 @@ class BluetoothLeService : Service() {
         }
     }
 
-    /**
-     * Retrieves a list of supported GATT services on the connected device. This should be
-     * invoked only after `BluetoothGatt#discoverServices()` completes successfully.
-     *
-     * @return A `List` of supported services.
-     */
-    val supportedGattServices: List<BluetoothGattService>?
-        get() = if (mBluetoothGatt == null) null else mBluetoothGatt!!.services
+
+
 
 }
