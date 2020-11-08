@@ -1,6 +1,7 @@
 package com.covidchain.app
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -14,6 +15,11 @@ class MainActivity : AppCompatActivity() {
         statusButton = findViewById(R.id.statusButton)
 
         status = loadStatus()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        startService(Intent(this, MainService::class.java))
     }
 
     private var status: Int = HEALTHY
