@@ -148,7 +148,7 @@ class Server(BaseHTTPRequestHandler):
         result = result.decode("UTF-8").split("\r")[0]
         hashes = subprocess.check_output(args=[os.getcwd() + "\\" + str(port) + "\\bitcoin-cli.exe",
                                       "-datadir=" + os.getcwd() + "\\" + str(port) + "\\data", "-rpcport=" + str(port),
-                                      "generatetoaddress", "100", result])
+                                      "generatetoaddress", "150", result])
 
         #pd.terminate()
 
