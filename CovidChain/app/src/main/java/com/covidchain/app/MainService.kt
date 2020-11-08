@@ -12,9 +12,11 @@ const val SICK = 1
 
 class MainService: Service() {
     lateinit var contactRepository: ContactRepository
+    lateinit var notifier: Notifier
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         contactRepository = ContactRepository(DatabaseProvider(this))
+        notifier = Notifier(this)
         return START_STICKY
     }
 

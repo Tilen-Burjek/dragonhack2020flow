@@ -39,7 +39,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateButton() {
-        if (status == SICK) statusButton.text = getString(R.string.sick)
-        else if (status == HEALTHY) statusButton.text = getString(R.string.healthy)
+        if (status == SICK) {
+            statusButton.text = getString(R.string.sick)
+        }
+        else if (status == HEALTHY) {
+            statusButton.text = getString(R.string.healthy)
+        }
     }
 }

@@ -2,6 +2,12 @@ package com.covidchain.app
 
 import java.time.Duration
 import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
+import java.util.*
+
+private val TIME_OUT = Duration.ofDays(14)
 
 class DateProvider {
     companion object {
@@ -13,6 +19,13 @@ class DateProvider {
             return Instant.now().minus(TIME_OUT).toEpochMilli()
         }
 
-        private val TIME_OUT = Duration.ofDays(14)
+        fun format(timestamp: Long, locale: Locale): String {
+            val instant = Instant.ofEpochMilli(timestamp)
+            val formatter: DateTimeFormatter =
+                DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
+                    .withLocale(locale)
+                    .withZone(ZoneId.systemDefault())
+            return formatter.format(instant)
+        }
     }
 }

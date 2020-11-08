@@ -2,4 +2,7 @@
     <string name="app_name">CovidChain</string>
     <string name="healthy">Healthy</string>
     <string name="sick">Sick</string>
+    <string name="notification_title">You\'ve had a contact!</string>
+    <string name="notification_channel">CovidChain</string>
+    <string name="notification_description">Covid contact tracker</string>
 </resources>
