@@ -34,11 +34,13 @@ class StatusApi {
     }
 
     suspend fun getKeys(): KeyPair {
+        return KeyPair("public", "private")
         val result = JSONObject(get("getnewaddress"))
         return KeyPair(result.getString("pubkey"), result.getString("privkey"))
     }
 
     suspend fun publish(keys: KeyPair, target: String): String {
+        return ""
         val body = JSONObject()
         body.put("address", target)
         body.put("privkey", keys.privateKey)

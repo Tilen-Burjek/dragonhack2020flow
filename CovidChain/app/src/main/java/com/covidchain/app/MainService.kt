@@ -14,8 +14,8 @@ import kotlinx.coroutines.launch
 
 const val HEALTHY = 0
 const val SICK = 1
-const val SCAN_INTERVAL = 10 * 1000L // 10s
-const val RECEIVE_INTERVAL = 10 * 1000L  // 10s for testing
+const val SCAN_INTERVAL = 1 * 1000L
+const val RECEIVE_INTERVAL = 1 * 1000L
 
 class MainService: Service() {
     lateinit var contactRepository: ContactRepository
@@ -67,15 +67,15 @@ class MainService: Service() {
     }
 
     private val scanTask = Runnable {
-        fun run() {
-            GlobalScope.launch {
-                val list = bleProvider.scan()
+        GlobalScope.launch {
+            if(keyPair != null) {
+                val list = bleProvider.scan(keyPair!!.publicKey)
                 list.forEach {
                     contactRepository.insert(it)
-                    if(status == SICK && keyPair != null) api.publish(keyPair!!, it)
+                    if (status == SICK) api.publish(keyPair!!, it)
                 }
-                scheduleScan()
             }
+            scheduleScan()
         }
     }
 
@@ -84,17 +84,15 @@ class MainService: Service() {
     }
 
     private val receiveTask = Runnable {
-        fun run() {
-            GlobalScope.launch {
-                val transactions = api.receive(keyPair!!.publicKey)
-                transactions.forEach {
-                    val timestamp = contactRepository.latest(it)
-                    if(timestamp != null) {
-                        notifier.notify(timestamp)
-                    }
+        GlobalScope.launch {
+            val transactions = api.receive(keyPair!!.publicKey)
+            transactions.forEach {
+                val timestamp = contactRepository.latest(it)
+                if(timestamp != null) {
+                    notifier.notify(timestamp)
                 }
-                scheduleReceive()
             }
+            scheduleReceive()
         }
     }
 
