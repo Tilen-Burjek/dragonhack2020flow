@@ -5,4 +5,5 @@
     <string name="notification_title">You\'ve had a contact!</string>
     <string name="notification_channel">CovidChain</string>
     <string name="notification_description">Covid contact tracker</string>
+    <string name="ble_playground">ble playground</string>
 </resources>

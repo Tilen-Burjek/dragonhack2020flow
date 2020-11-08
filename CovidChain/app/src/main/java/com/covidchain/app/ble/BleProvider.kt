@@ -19,8 +19,6 @@ import kotlin.coroutines.coroutineContext
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-private const val ENABLE_BLUETOOTH_REQUEST_CODE = 1
-
 class GattCallback(private val c: Continuation<String>): BluetoothGattCallback() {
     override fun onCharacteristicRead(
         gatt: BluetoothGatt,

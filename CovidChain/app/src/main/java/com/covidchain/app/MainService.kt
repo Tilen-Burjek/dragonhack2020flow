@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import com.covidchain.app.ble.BleProvider
 import com.covidchain.app.db.ContactRepository
 import com.covidchain.app.db.DatabaseProvider
 import kotlinx.coroutines.GlobalScope
@@ -21,6 +22,8 @@ class MainService: Service() {
     lateinit var notifier: Notifier
     lateinit var handler: Handler
     lateinit var api: StatusApi
+    lateinit var bleProvider: BleProvider
+
     private var status: Int = HEALTHY
     private var keyPair: KeyPair? = null
 
@@ -29,6 +32,7 @@ class MainService: Service() {
         notifier = Notifier(this)
         contactRepository = ContactRepository(DatabaseProvider(this))
         handler = Handler(Looper.getMainLooper())
+        bleProvider = BleProvider(this)
         api = StatusApi()
         scheduleScan()
         GlobalScope.launch {
@@ -65,7 +69,7 @@ class MainService: Service() {
     private val scanTask = Runnable {
         fun run() {
             GlobalScope.launch {
-                val list = listOf("1", "2") // = ble.scan()
+                val list = bleProvider.scan()
                 list.forEach {
                     contactRepository.insert(it)
                     if(status == SICK && keyPair != null) api.publish(keyPair!!, it)

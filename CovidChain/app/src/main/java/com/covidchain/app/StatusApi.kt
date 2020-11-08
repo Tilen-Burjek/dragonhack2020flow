@@ -7,7 +7,7 @@ import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
 
-const val BASE_URL = "http://0.0.0.0:80/"
+const val BASE_URL = "http://127.0.0.1:80/"
 data class KeyPair(val publicKey: String, val privateKey: String)
 class StatusApi {
     private suspend fun request(url: String, method: String, body: String?): String {
