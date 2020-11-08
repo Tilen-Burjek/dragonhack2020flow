@@ -9,6 +9,8 @@ import androidx.room.Query
 interface ContactDao {
     @Query("SELECT * FROM contact WHERE `key` = :key ORDER BY timestamp DESC LIMIT 1")
     suspend fun latest(key: String): Contact?
+    @Query("SELECT * FROM contact WHERE `timestamp` > :timestamp ORDER BY timestamp DESC")
+    suspend fun all(timestamp: Long): List<Contact>
     @Insert(onConflict = IGNORE)
     suspend fun insert(contact: Contact): Long
     @Query("DELETE FROM contact WHERE timestamp < :before")

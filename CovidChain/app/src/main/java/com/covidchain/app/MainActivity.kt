@@ -19,7 +19,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        startService(Intent(this, MainService::class.java))
+        updateService(false)
+    }
+
+    private fun updateService(update: Boolean) {
+        val intent = Intent(this, MainService::class.java)
+        intent.putExtra("Status", status)
+        intent.putExtra("Update", update)
+        startService(intent)
     }
 
     private var status: Int = HEALTHY
@@ -42,6 +49,7 @@ class MainActivity : AppCompatActivity() {
 
     fun toggleStatus(view: View) {
         status = 1 - status
+        updateService(true)
     }
 
     private fun updateButton() {

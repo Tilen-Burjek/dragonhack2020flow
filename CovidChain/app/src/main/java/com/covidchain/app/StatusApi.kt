@@ -2,6 +2,7 @@ package com.covidchain.app
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
@@ -44,7 +45,13 @@ class StatusApi {
         return post("sendtoaddress/" + keys.publicKey, body.toString())
     }
 
-    suspend fun receive(publicKey: String): String {
-        return get("receive")
+    suspend fun receive(publicKey: String): List<String> {
+        val json = JSONArray(get("listtransactions/" + publicKey))
+        val list = mutableListOf<String>()
+        val len: Int = json.length()
+        for (i in 0 until len) {
+            list.add(json.get(i).toString())
+        }
+        return list
     }
 }
