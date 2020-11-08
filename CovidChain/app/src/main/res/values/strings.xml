@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CovidChain</string>
+    <string name="healthy">Healthy</string>
+    <string name="sick">Sick</string>
 </resources>
