@@ -3,6 +3,7 @@
     package="com.covidchain.app">
 
     <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
     <!-- Required only if your app isn't using the Device Companion Manager. -->
