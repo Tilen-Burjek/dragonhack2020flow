@@ -3,6 +3,7 @@
     package="com.covidchain.app">
 
     <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
     <!-- Required only if your app isn't using the Device Companion Manager. -->
@@ -18,6 +19,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CovidChain">
         <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".punch.BLEActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
