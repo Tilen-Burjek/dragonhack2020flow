@@ -48,11 +48,6 @@ private const val ENABLE_BLUETOOTH_REQUEST_CODE = 1
 private const val LOCATION_PERMISSION_REQUEST_CODE = 2
 
 class MainActivity : AppCompatActivity() {
-
-    /*******************************************
-     * Properties
-     *******************************************/
-
     private val bluetoothAdapter: BluetoothAdapter by lazy {
         val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         bluetoothManager.adapter
@@ -87,10 +82,6 @@ class MainActivity : AppCompatActivity() {
 
     private val isLocationPermissionGranted
         get() = hasPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-
-    /*******************************************
-     * Activity function overrides
-     *******************************************/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -137,10 +128,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-    /*******************************************
-     * Private functions
-     *******************************************/
 
     private fun promptEnableBluetooth() {
         if (!bluetoothAdapter.isEnabled) {
