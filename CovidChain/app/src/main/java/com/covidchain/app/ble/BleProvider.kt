@@ -51,7 +51,7 @@ class BleScan(
     private val scanResults: MutableList<ScanResult> = mutableListOf()
     private lateinit var co: Continuation<List<ScanResult>>
     private val filter = ScanFilter.Builder().setServiceUuid(
-        ParcelUuid.fromString(UUID_COVID_CHAIN_KEY.toString())
+        ParcelUuid.fromString(SERVICE_STRING)
     ).build()
 
     private val scanSettings = ScanSettings.Builder()
